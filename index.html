@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-th="teal">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>عيادة الأسنان</title>
+<style>
+:root{--bg:#f3f7f6;--cd:#fff;--t:#14292b;--m:#6a8084;--b:#e0eaea;--r:#d1453b;--g:#1f9a63;--sh:0 6px 24px rgba(15,60,60,.08)}
+html[data-th=teal]{--c:#0f766e;--c2:#dbf2ef;--g1:#14a398;--g2:#0b4f5c;--ac:#f4b860}
+html[data-th=violet]{--c:#6a4cc4;--c2:#ece6fb;--g1:#8b6ee6;--g2:#35247f;--ac:#ffc86b}
+html[data-th=gold]{--c:#a8761f;--c2:#f6ecd6;--g1:#d3a04a;--g2:#5b3a0c;--ac:#1d2b4a}
+html[data-dk=on]{--bg:#0e1618;--cd:#162225;--t:#e7f1f2;--m:#8aa3a7;--b:#243438;--c2:#1c3236;--sh:0 6px 24px rgba(0,0,0,.35)}
+html[data-dk=on][data-th=violet]{--c2:#2a2447}
+html[data-dk=on][data-th=gold]{--c2:#352a14}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,sans-serif;background:var(--bg);color:var(--t);font-size:16px;transition:background .3s}
+header{background:linear-gradient(135deg,var(--g1),var(--g2));color:#fff;padding:calc(12px + env(safe-area-inset-top)) 14px 14px;display:flex;align-items:center;gap:8px;position:sticky;top:0;z-index:5;border-radius:0 0 22px 22px;box-shadow:var(--sh)}
+header .logo{width:34px;height:34px;flex:none}
+header h1{font-size:18px;margin:0;flex:1;font-weight:700}
+header button{background:rgba(255,255,255,.18);color:#fff;border:0;border-radius:11px;width:36px;height:36px;font-size:16px;display:grid;place-items:center}
+header button.tx{width:auto;padding:0 12px;font-size:13px}
+main{padding:16px 14px 110px;max-width:640px;margin:0 auto;animation:in .35s ease}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.card{background:var(--cd);border:1px solid var(--b);border-radius:18px;padding:16px;margin-bottom:14px;box-shadow:var(--sh)}
+.sh{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.sh h3{margin:0;font-size:16px;display:flex;align-items:center;gap:8px}
+.sh h3:before{content:"";width:5px;height:18px;border-radius:3px;background:linear-gradient(var(--g1),var(--g2))}
+label{display:block;font-size:12.5px;color:var(--m);margin:12px 0 5px}
+input,textarea,select{width:100%;padding:12px;border:1.5px solid var(--b);border-radius:12px;font:inherit;background:var(--bg);color:var(--t);outline:0}
+input:focus,textarea:focus{border-color:var(--c)}
+textarea{min-height:92px;resize:vertical}
+button{font-family:inherit}
+.p{background:linear-gradient(135deg,var(--g1),var(--g2));color:#fff;border:0;border-radius:13px;padding:13px;font-size:16px;font-weight:600;width:100%;margin-top:14px;box-shadow:0 6px 16px rgba(0,0,0,.15)}
+.s{background:var(--c2);color:var(--c);border:0;border-radius:11px;padding:10px 14px;font-size:14px;font-weight:600}
+.d{background:none;border:0;color:var(--r);font-size:13px;padding:4px 6px}
+.pb{display:inline-flex;align-items:center;gap:6px;background:var(--c2);color:var(--c);border:0;border-radius:11px;padding:8px 12px;font-size:13px;font-weight:600}
+.pb svg,.ic{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.row{display:flex;gap:10px}.row>*{flex:1}
+.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--g1),var(--g2));color:#fff;border-radius:22px;padding:18px;margin-bottom:14px;box-shadow:var(--sh)}
+.hero:after{content:"";position:absolute;left:-30px;bottom:-40px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.08)}
+.hero .top{display:flex;gap:12px;align-items:center;position:relative;z-index:1}
+.av{width:56px;height:56px;border-radius:18px;background:rgba(255,255,255,.22);display:grid;place-items:center;font-size:24px;font-weight:700;flex:none}
+.hero b{font-size:19px}.hero small{display:block;opacity:.8;margin-top:2px}
+.chips{display:flex;gap:8px;margin-top:14px;position:relative;z-index:1;flex-wrap:wrap}
+.chip{background:rgba(255,255,255,.18);border-radius:12px;padding:7px 11px;font-size:13px}
+.hero .pb{background:#fff;color:var(--g2);margin-top:14px;position:relative;z-index:1}
+.bar{position:fixed;bottom:0;left:0;right:0;z-index:6;display:flex;justify-content:center;padding:0 12px calc(10px + env(safe-area-inset-bottom));pointer-events:none}
+.bar div{pointer-events:auto;display:flex;width:100%;max-width:520px;background:var(--cd);border:1px solid var(--b);border-radius:22px;padding:6px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+.bar button{background:none;border:0;border-radius:16px;padding:8px 2px;font-size:11px;color:var(--m);display:flex;flex-direction:column;align-items:center;gap:3px}
+.bar button.on{background:var(--c2);color:var(--c);font-weight:700}
+.bar svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tl{position:relative;padding-inline-start:26px}
+.tl:before{content:"";position:absolute;inset-inline-start:8px;top:6px;bottom:6px;width:2px;background:var(--b)}
+.ti{position:relative;margin-bottom:16px}
+.ti:before{content:"";position:absolute;inset-inline-start:-24px;top:4px;width:14px;height:14px;border-radius:50%;background:var(--cd);border:3px solid var(--c)}
+.dt{font-size:12px;color:var(--m)}
+.pre{white-space:pre-wrap;line-height:1.7}
+.ring{display:flex;align-items:center;gap:16px}
+.ring svg{width:104px;height:104px;flex:none;transform:rotate(-90deg)}
+.ring .k{flex:1;display:grid;gap:8px}
+.k div{display:flex;justify-content:space-between;font-size:14px;color:var(--m)}.k b{color:var(--t);font-size:15px}
+.pay{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px dashed var(--b)}
+.pay:last-child{border:0}.pay .x{flex:1}
+.rx{position:relative;background:var(--bg);border:1px solid var(--b);border-inline-start:5px solid var(--ac);border-radius:14px;padding:14px;margin-bottom:12px}
+.rx .sym{font-size:34px;line-height:1;color:var(--ac);font-family:Georgia,serif;font-weight:700;float:inline-start;margin-inline-end:10px}
+html[data-th=gold] .rx .sym{color:var(--c)}
+.rx .act{display:flex;gap:6px;margin-top:10px;justify-content:flex-end;clear:both}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.grid figure{margin:0;background:var(--bg);border-radius:14px;overflow:hidden;border:1px solid var(--b)}
+.grid img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
+.grid figcaption{font-size:12px;color:var(--m);padding:7px 9px}
+.empty{color:var(--m);text-align:center;padding:22px 8px;font-size:14px}
+.note{font-size:12.5px;color:var(--m);background:var(--c2);border-radius:14px;padding:12px;margin-top:6px;line-height:1.7}
+.big{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:20;display:flex;align-items:center;justify-content:center}
+.big img{max-width:96%;max-height:90%;border-radius:10px}
+.seg{display:flex;background:var(--cd);border:1px solid var(--b);border-radius:15px;padding:4px;margin-bottom:14px}
+.seg button{flex:1;border:0;background:none;padding:11px;border-radius:12px;font-size:15px;color:var(--m)}
+.seg button.on{background:linear-gradient(135deg,var(--g1),var(--g2));color:#fff;font-weight:700}
+.back{background:none;border:0;color:var(--c);font-size:15px;padding:0 0 12px;font-weight:600}
+.pl{display:flex;align-items:center;gap:12px;cursor:pointer}
+.pl .av{background:var(--c2);color:var(--c);width:46px;height:46px;border-radius:15px;font-size:19px}
+.bd-y{background:#fff3d6;color:#9a6b00}.bd-b{background:#e3edff;color:#2c5bb8}
+.ap{display:flex;gap:12px;padding:14px 0;border-bottom:1px dashed var(--b)}.ap:last-child{border:0}
+.dtb{flex:none;width:58px;height:66px;border-radius:15px;background:linear-gradient(135deg,var(--g1),var(--g2));color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.dtb b{font-size:22px;line-height:1}.dtb span{font-size:11px;margin-top:3px;opacity:.9}
+.ap .x{flex:1;min-width:0}
+.sts{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.sts button{border:1.5px solid var(--b);background:var(--bg);color:var(--t);border-radius:20px;padding:7px 11px;font-size:12.5px}
+.sts button.on{background:var(--c);color:#fff;border-color:var(--c);font-weight:700}
+.ap input.pn{margin-top:8px;padding:9px;font-size:13px}
+.past{opacity:.7}
+#sigpad{display:block;width:100%;height:auto;touch-action:none;background:#fff;border:2px dashed var(--b);border-radius:14px}
+.sigprev{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+.sigprev .bx{background:#fff;border:1px solid var(--b);border-radius:12px;padding:8px;min-width:120px;text-align:center}
+.sigprev img{max-height:60px;max-width:140px}.sigprev small{display:block;color:#777;font-size:11px;margin-top:2px}
+.nw{border-inline-start:5px solid var(--c);border-radius:14px;background:var(--bg);padding:12px;margin-bottom:10px}
+.nw.n-off{border-color:#2a7fd4}.nw.n-deal{border-color:#e0a21b}.nw.n-warn{border-color:var(--r)}
+.nw h4{margin:0 0 4px;font-size:15px}.nw .pre{font-size:14px}
+.s.on{background:var(--r);color:#fff}
+.rq{background:var(--c2);border-radius:12px;padding:9px 10px;margin-top:8px;font-size:13px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.pnl{background:var(--bg);border:1px dashed var(--c);border-radius:14px;padding:10px;margin-top:10px}
+.pnl .p{margin-top:10px;padding:10px;font-size:14px}
+#msgs{max-height:52vh;min-height:140px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding:4px}
+.msg{max-width:84%;padding:9px 12px;border-radius:16px;font-size:14.5px}
+.msg.me{align-self:flex-start;background:linear-gradient(135deg,var(--g1),var(--g2));color:#fff;border-end-start-radius:4px}
+.msg.ot{align-self:flex-end;background:var(--bg);border:1px solid var(--b);border-end-end-radius:4px}
+.msg.urg{box-shadow:0 0 0 2px var(--r)}
+.msg img{max-width:100%;max-height:220px;border-radius:10px;display:block;margin:4px 0}
+.mt{font-size:10.5px;opacity:.7;margin-top:4px}
+.cmp{margin-top:12px;border-top:1px dashed var(--b);padding-top:12px}
+.cmp textarea{min-height:64px}
+#c_prev img{height:70px;border-radius:10px;vertical-align:middle}
+.warn{background:#fdecea;color:#a1342b;border-radius:14px;padding:11px;font-size:13px;line-height:1.7;margin-bottom:12px}
+.dot{position:absolute;top:0;inset-inline-end:10px;background:var(--r);color:#fff;border-radius:10px;font-size:10px;padding:1px 5px;font-style:normal;font-weight:700}
+.bar div{overflow-x:auto;scrollbar-width:none}
+.bar button{flex:1 0 auto;min-width:56px;position:relative}
+.badge{font-size:12px;padding:4px 9px;border-radius:20px;font-weight:700}
+.bd-r{background:#fde8e6;color:var(--r)}.bd-g{background:#dff5ea;color:var(--g)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.stats div{background:var(--cd);border:1px solid var(--b);border-radius:16px;padding:14px;box-shadow:var(--sh)}
+.stats b{font-size:20px;display:block}.stats span{font-size:12px;color:var(--m)}
+.th{display:flex;gap:10px}.th button{flex:1;border:2px solid transparent;border-radius:14px;padding:14px 4px;color:#fff;font-weight:600;font-size:13px}
+.th button.on{border-color:var(--t)}
+#pv{display:none;position:fixed;inset:0;z-index:30;background:#cfd8d8;overflow:auto;padding:0 0 30px}
+#pv.on{display:block}
+#pv .tb{position:sticky;top:0;z-index:2;display:flex;gap:8px;padding:10px;background:#0e2a2d;flex-wrap:wrap}
+#pv .tb .pb{background:#fff;color:#0e2a2d;flex:1;justify-content:center;white-space:nowrap}
+#pv .tb .pb.main{background:var(--ac)}
+#print{background:#fff;color:#111;font-family:"Segoe UI",Tahoma,sans-serif;font-size:13px;max-width:800px;margin:14px auto;padding:20px;border-radius:6px;box-shadow:0 4px 20px rgba(0,0,0,.2)}
+.pg+.pg{border-top:2px dashed #bbb;margin-top:26px;padding-top:26px}
+@page{size:A4;margin:14mm}
+@media print{
+ body>*:not(#pv){display:none!important}
+ body{background:#fff}
+ #pv{position:static;display:block;background:#fff;overflow:visible;padding:0}
+ #pv .tb{display:none}
+ #print{box-shadow:none;margin:0;padding:0;max-width:none;border-radius:0}
+ .pg{page-break-after:always}.pg:last-child{page-break-after:auto}
+ .pg+.pg{border:0;margin:0;padding:0}
+}
+#print .ph{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;border-bottom:3px solid var(--c);padding-bottom:10px;margin-bottom:14px}
+#print .pn{display:flex;gap:10px;align-items:center}
+#print .pn svg{width:46px;height:46px;fill:var(--c)}
+#print .pn b{font-size:20px;color:var(--c);display:block}
+#print .pn span{font-size:12px;color:#555;display:block}
+#print .pi{display:flex;flex-wrap:wrap;gap:6px 20px;background:#f2f6f6;border-radius:8px;padding:9px 12px;margin-bottom:14px;font-size:13px}
+#print h2{font-size:16px;margin:16px 0 8px;color:var(--c);border-inline-start:5px solid var(--ac);padding-inline-start:8px}
+#print table{width:100%;border-collapse:collapse;margin-bottom:10px}
+#print th{background:var(--c);color:#fff;padding:8px;text-align:right;font-size:12.5px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+#print td{padding:8px;border-bottom:1px solid #d5dede;vertical-align:top;font-size:13px}
+#print tr:nth-child(even) td{background:#f7fafa;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+#print .tot{display:flex;gap:12px;margin:8px 0 12px}
+#print .tot div{flex:1;border:1.5px solid var(--c);border-radius:8px;padding:8px;text-align:center}
+#print .tot b{display:block;font-size:16px}
+#print .rxs{font-family:Georgia,serif;font-size:60px;color:var(--c);line-height:1;margin:6px 0}
+#print ol{padding-inline-start:22px;line-height:2.1;font-size:15px}
+#print .sig{margin-top:34px;display:flex;justify-content:flex-end;page-break-inside:avoid}
+#print .sb{width:250px;text-align:center}
+#print .si{min-height:72px;display:flex;align-items:flex-end;justify-content:center;gap:10px}
+#print .si img{max-height:72px;max-width:130px;object-fit:contain}
+#print .sline{border-top:1.5px solid #333;padding-top:6px;font-size:12px}
+#print .ft{margin-top:24px;font-size:11px;color:#777;text-align:center;border-top:1px solid #ddd;padding-top:8px}
+#print .wm{white-space:pre-wrap}
+.seg button{padding:11px 2px;font-size:14px}a.s{display:inline-block;text-decoration:none;text-align:center}
+</style>
+</head>
+<body>
+<header id="hd"></header>
+<main id="app"></main>
+<div id="nav"></div>
+<div id="pv"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+// ---------- أيقونات ----------
+var TOOTH='M12 5.5C10 3.5 4 3.5 4 9c0 3 1.5 4.5 2 7.5.3 2 .8 4 2.2 4 1.8 0 1.3-4.5 3.8-4.5s2 4.5 3.8 4.5c1.4 0 1.9-2 2.2-4C18.5 13.5 20 12 20 9c0-5.5-6-5.5-8-3.5z';
+var IC={
+ info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>',
+ sessions:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h9"/>',
+ pay:'<rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h3"/>',
+ rx:'<rect x="2.5" y="8.5" width="19" height="7" rx="3.5" transform="rotate(-45 12 12)"/><path d="M9.5 9.5l5 5"/>',
+ img:'<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 8"/>',
+ appts:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+ chat:'<path d="M21 12a8 8 0 01-11.6 7.1L4 20l1-4.6A8 8 0 1121 12z"/>',
+ print:'<path d="M6 9V3h12v6M6 18H4v-7h16v7h-2"/><rect x="6" y="14" width="12" height="7"/>'
+};
+function ico(n){return '<svg viewBox="0 0 24 24">'+IC[n]+'</svg>'}
+var PRINT_BTN=function(a,id,txt){return '<button class="pb" data-a="'+a+'"'+(id?' data-id="'+id+'"':'')+'>'+ico('print')+(txt||'طباعة')+'</button>'};
+
+// ---------- التخزين (نموذج تجريبي: على هذا الجهاز فقط) ----------
+var KEY="dental_demo_v3", mem=null;
+function today(){return new Date().toISOString().slice(0,10)}
+function uid(){return Math.random().toString(36).slice(2,9)}
+function addDays(n){var d=new Date();d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)}
+function seed(){return{docPass:"1234",th:"teal",dk:false,
+ clinic:{name:"عيادة الابتسامة",doctor:"د. اسم الدكتور",phone:"",addr:"",sig:"",stamp:""},news:[],
+ patients:[{id:uid(),name:"أحمد محمد",phone:"0912345678",code:"1111",cur:"$",
+  condition:"تسوس عميق في الضرس السفلي الأيمن (٤٦) مع التهاب لثة خفيف.",
+  plan:"١- علاج عصب للضرس ٤٦\n٢- تلبيسة زيركون\n٣- تنظيف وتلميع اللثة",
+  sessions:[{id:uid(),date:"2026-11-02",work:"فحص أولي وأشعة بانوراما"},{id:uid(),date:"2026-11-09",work:"بدء علاج العصب – الجلسة الأولى"},{id:uid(),date:"2026-11-16",work:"إكمال علاج العصب وحشوة مؤقتة"}],
+  total:600,payments:[{id:uid(),date:"2026-11-02",amount:100},{id:uid(),date:"2026-11-09",amount:150}],
+  rx:[{id:uid(),date:"2026-11-09",text:"أموكسيسيلين ٥٠٠ ملغ – كبسولة كل ٨ ساعات لمدة ٥ أيام\nإيبوبروفين ٤٠٠ ملغ – عند الألم فقط (بعد الأكل)"}],
+  appts:[{id:uid(),date:addDays(3),time:"11:00",note:"إكمال علاج العصب – الجلسة الثانية",status:"pending",pnote:""}],
+  chat:[{id:uid(),from:"doc",text:"أهلاً أحمد، إذا حسيت بأي ألم مفاجئ أو مضاعفات بعد الجلسة اكتبلي هون.",img:"",urg:false,ts:Date.now(),r:0}],
+  images:[]}]}}
+function load(){return{th:"teal",dk:false,clinic:{name:"العيادة",doctor:"",phone:"",addr:"",sig:"",stamp:""},news:[],patients:[],reqs:[],areq:[]}}
+function save(){try{syncOut()}catch(e){console.error(e)}return true}
+var db=load(), S={role:null,pid:null,tab:"info",mode:"doc",big:null,settings:false,q:"",rsAp:null,edAp:null,dtab:"pts",urgent:false,chkph:"",draft:"",pimg:null};
+function P(){return db.patients.find(function(p){return p.id===S.pid})}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function num(n){return Number(n||0).toLocaleString("en")}
+function money(p,n){return num(n)+" "+esc(p.cur||"$")}
+function paid(p){return p.payments.reduce(function(a,x){return a+Number(x.amount)},0)}
+function sortD(a){return a.slice().sort(function(x,y){return y.date<x.date?-1:1})}
+function applyTheme(){document.documentElement.dataset.th=db.th||"teal";document.documentElement.dataset.dk=db.dk?"on":"off"}
+
+// ---------- العرض ----------
+var TABS=[["info","الحالة"],["appts","المواعيد"],["chat","الاستشارة"],["sessions","الجلسات"],["pay","الأقساط"],["rx","الوصفات"],["img","الصور"]];
+function header(title){
+  var h='<svg class="logo" viewBox="0 0 24 24"><path d="'+TOOTH+'" fill="#fff"/></svg><h1>'+esc(title)+'</h1>';
+  h+='<button data-a="theme" title="الثيم">✦</button><button data-a="dark" title="ليلي">◐</button>';
+  if(S.role==="doc")h+='<button data-a="settings" title="إعدادات">⚙</button>';
+  if(S.role)h+='<button class="tx" data-a="logout">خروج</button>';
+  return h;
+}
+function render(){
+  applyTheme();
+  var a=document.getElementById("app"),nav=document.getElementById("nav"),title=db.clinic.name,body="";
+  nav.innerHTML="";
+  if(S.big){a.innerHTML='<div class="big" data-a="closebig"><img src="'+S.big+'"></div>';return}
+  if(!S.role)body=loginView();
+  else if(S.settings){title="الإعدادات";body=settingsView()}
+  else if(S.role==="doc"&&!S.pid){title="مرضاي";body=listView()}
+  else{
+    var p=P();if(!p){S.pid=null;return render()}
+    title=S.role==="doc"?p.name:"ملفي";
+    body=patientView(p,S.role==="doc");
+    if(S.role==="pat"&&S.tab==="info")markSeen(p);
+    var n='<div class="bar"><div>';
+    TABS.forEach(function(t){var u=t[0]==='chat'?unread(p,S.role==='doc'):(t[0]==='info'&&S.role==='pat'&&S.tab!=='info'?unseenNews(p):0);n+='<button data-a="tab" data-v="'+t[0]+'" class="'+(S.tab===t[0]?"on":"")+'">'+(u?'<i class="dot">'+u+'</i>':'')+ico(t[0])+t[1]+'</button>'});
+    nav.innerHTML=n+'</div></div>';
+  }
+  document.getElementById("hd").innerHTML=header(title);
+  a.innerHTML=body;
+  initPad();
+  var mg=document.getElementById('msgs');if(mg)mg.scrollTop=mg.scrollHeight;
+}
+function loginView(){
+  return '<div style="text-align:center;margin:10px 0 20px"><svg viewBox="0 0 24 24" style="width:78px;height:78px"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--g1)"/><stop offset="1" stop-color="var(--g2)"/></linearGradient></defs><path d="'+TOOTH+'" fill="url(#lg)"/></svg><h2 style="margin:8px 0 2px">'+esc(db.clinic.name)+'</h2><div class="dt">ملفك الطبي بين إيديك</div></div>'+
+  '<div class="seg"><button data-a="mode" data-v="doc" class="'+(S.mode==="doc"?"on":"")+'">دكتور</button><button data-a="mode" data-v="pat" class="'+(S.mode==="pat"?"on":"")+'">مريض</button><button data-a="mode" data-v="new" class="'+(S.mode==="new"?"on":"")+'">حجز دور</button></div>'+
+  '<div class="card">'+(S.mode==="new"?reqForm():S.mode==="doc"?
+   '<label>البريد الإلكتروني</label><input id="em" type="email" inputmode="email" autocapitalize="none" autocomplete="username"><label>كلمة السر</label><input id="pw" type="password" autocomplete="current-password"><button class="p" data-a="logdoc">دخول</button>':
+   '<label>رقم الهاتف</label><input id="ph" inputmode="tel" placeholder="رقم هاتفك"><label>رمز الدخول (يعطيك إياه الدكتور)</label><input id="cd" inputmode="numeric" placeholder="الرمز"><button class="p" data-a="logpat">دخول</button>')+
+  '</div><div class="note">ملفك الطبي محمي برمز دخول خاص فيك، ولا يشوفه غيرك وغير الدكتور.</div>';
+}
+var NT={off:["🏖","عطلة","n-off"],deal:["🎁","عرض","n-deal"],info:["📢","إعلان",""],warn:["⚠️","تنبيه","n-warn"]};
+function newsActive(n){return !n.until||n.until>=today()}
+function unseenNews(p){return db.news.filter(function(n){return newsActive(n)&&p.seen.indexOf(n.id)<0}).length}
+function markSeen(p){var ch=false;db.news.forEach(function(n){if(newsActive(n)&&p.seen.indexOf(n.id)<0){p.seen.push(n.id);ch=true}});if(ch){try{localStorage.setItem("seen_"+p.id,JSON.stringify(p.seen))}catch(e){}}}
+function newsText(n){var t=NT[n.type]||NT.info;return t[0]+" "+n.title+"\n"+n.text+"\n— "+db.clinic.name}
+function newsCard(p,n){
+  var t=NT[n.type]||NT.info,isNew=p&&p.seen.indexOf(n.id)<0;
+  return '<div class="nw '+t[2]+'"><h4>'+t[0]+' '+esc(n.title)+(isNew?' <span class="badge bd-r">جديد</span>':'')+'</h4>'+(n.text?'<div class="pre">'+esc(n.text)+'</div>':'')+'<div class="dt" style="margin-top:6px">'+esc(db.clinic.name)+' · '+fmtTs(n.ts).slice(0,5)+(n.until?' · ساري لحد '+esc(n.until):'')+'</div></div>';
+}
+function patNews(p){
+  var l=db.news.filter(newsActive).sort(function(a,b){return b.ts-a.ts});
+  if(!l.length)return '';
+  var h='<div class="card"><div class="sh"><h3>تعميمات العيادة</h3></div>';
+  l.forEach(function(n){h+=newsCard(p,n)});
+  return h+'</div>';
+}
+function newsAdmin(){
+  var h='<div class="card"><div class="sh"><h3>تعميم جديد لكل المرضى</h3></div><label>النوع</label><select id="n_type"><option value="off">🏖 عطلة</option><option value="deal">🎁 عرض</option><option value="info">📢 إعلان</option><option value="warn">⚠️ تنبيه</option></select><label>العنوان</label><input id="n_title" placeholder="مثال: العيادة مغلقة يوم الجمعة"><label>التفاصيل</label><textarea id="n_text"></textarea><label>ينتهي بتاريخ (اختياري، بعدها بيختفي عند المرضى)</label><input id="n_until" type="date"><button class="p" data-a="sendnews">إرسال لكل المرضى</button></div>';
+  var l=db.news.slice().sort(function(a,b){return b.ts-a.ts});
+  h+='<div class="card"><div class="sh"><h3>التعميمات المرسلة</h3></div>';
+  if(!l.length)h+='<div class="empty">ما في تعميمات بعد</div>';
+  l.forEach(function(n){
+    var seen=db.patients.filter(function(p){return p.seen.indexOf(n.id)>-1}).length;
+    h+=newsCard(null,n)+'<div class="row" style="margin:-4px 0 14px;align-items:center"><span class="dt" style="flex:1">'+(newsActive(n)?'':'منتهي · ')+'قرأه '+seen+' من '+db.patients.length+'</span><button class="s" data-a="sharenews" data-id="'+n.id+'" style="flex:none">مشاركة</button><button class="d" data-a="delnews" data-id="'+n.id+'" style="flex:none">حذف</button></div>';
+  });
+  return h+'</div>';
+}
+function lastTs(p){return p.chat.length?p.chat[p.chat.length-1].ts:0}
+function totalUnread(){return db.patients.reduce(function(a,p){return a+unread(p,true)},0)}
+function listView(){
+  var nu=totalUnread(),nr=db.reqs.filter(function(r){return r.status==="new"}).length;
+  var h='<div class="seg"><button data-a="dtab" data-v="pts" class="'+(S.dtab==="pts"?"on":"")+'">المرضى</button><button data-a="dtab" data-v="msgs" class="'+(S.dtab==="msgs"?"on":"")+'">الرسائل'+(nu?' <span class="badge bd-r">'+nu+'</span>':'')+'</button><button data-a="dtab" data-v="reqs" class="'+(S.dtab==="reqs"?"on":"")+'">حجوزات'+(nr?' <span class="badge bd-r">'+nr+'</span>':'')+'</button><button data-a="dtab" data-v="news" class="'+(S.dtab==="news"?"on":"")+'">تعميم</button></div>';
+  if(S.dtab==="reqs")return h+reqsAdmin();
+  if(S.dtab==="news")return h+newsAdmin();
+  if(S.dtab==="msgs"){
+    var l=db.patients.filter(function(p){return p.chat.length}).sort(function(a,b){return lastTs(b)-lastTs(a)});
+    if(!l.length)return h+'<div class="empty">ما في محادثات بعد. لما يكتبلك مريض بتظهر هون، وبتختار عمين بدك ترد.</div>';
+    l.forEach(function(p){
+      var m=p.chat[p.chat.length-1],u=unread(p,true),urg=p.chat.some(function(x){return !x.r&&x.from==="pat"&&x.urg});
+      h+='<div class="card pl" data-a="openchat" data-id="'+p.id+'"><div class="av">'+esc(p.name.charAt(0))+'</div><div style="flex:1;min-width:0"><b>'+esc(p.name)+'</b>'+(urg?' <span class="badge bd-r">عاجل</span>':'')+'<div class="dt" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+(m.from==="doc"?"أنت: ":"")+(m.text?esc(m.text):"📷 صورة")+'</div></div><div style="text-align:left"><div class="dt">'+fmtTs(m.ts)+'</div>'+(u?'<span class="badge bd-r">'+u+'</span>':'')+'</div></div>';
+    });
+    return h;
+  }
+  var rem=db.patients.reduce(function(a,p){return a+Number(p.total||0)-paid(p)},0);
+  var need=0;db.patients.forEach(function(p){var n=nextAppt(p);if(n&&(n.status==='req'||n.status==='pending'||n.status==='resched'||n.status==='no'))need++});
+  h+='<div class="stats"><div><b>'+db.patients.length+'</b><span>عدد المرضى</span></div><div><b>'+num(rem)+'</b><span>إجمالي المتبقي</span></div><div><b>'+need+'</b><span>مواعيد تحتاج متابعة</span></div></div>';
+  h+='<div class="card"><div class="sh"><h3>مريض جديد</h3></div><input id="nn" placeholder="اسم المريض"><div class="row" style="margin-top:10px"><input id="np" inputmode="tel" placeholder="رقم الهاتف"><input id="nc" inputmode="numeric" placeholder="رمز دخول"></div><button class="p" data-a="addpat">إضافة</button></div>';
+  h+='<input id="sq" placeholder="🔍 بحث عن مريض" value="'+esc(S.q)+'" style="margin-bottom:14px">';
+  var l2=db.patients.filter(function(p){return !S.q||p.name.indexOf(S.q)>-1||p.phone.indexOf(S.q)>-1});
+  if(!l2.length)h+='<div class="empty">ما في مرضى</div>';
+  l2.forEach(function(p){
+    var r=Number(p.total||0)-paid(p),na=nextAppt(p);
+    h+='<div class="card pl" data-a="open" data-id="'+p.id+'"><div class="av">'+esc(p.name.charAt(0))+'</div><div style="flex:1"><b>'+esc(p.name)+'</b><div class="dt">'+esc(p.phone)+'</div>'+(na?'<div class="dt">📅 '+esc(na.date)+' · '+ST[na.status][0]+'</div>':'')+'</div>'+(r>0?'<span class="badge bd-r">متبقي '+money(p,r)+'</span>':'<span class="badge bd-g">مسدّد</span>')+'</div>';
+  });
+  return h;
+}
+function sigPrev(){
+  var c=db.clinic,h='<div class="sigprev">';
+  h+='<div class="bx">'+(c.sig?'<img src="'+c.sig+'"><small>التوقيع <button class="d" data-a="rmsig">حذف</button></small>':'<small>ما في توقيع</small>')+'</div>';
+  h+='<div class="bx">'+(c.stamp?'<img src="'+c.stamp+'"><small>الختم <button class="d" data-a="rmstamp">حذف</button></small>':'<small>ما في ختم</small>')+'</div></div>';
+  return h;
+}
+var padDirty=false;
+function initPad(){
+  var c=document.getElementById("sigpad");if(!c)return;
+  var x=c.getContext("2d");x.lineWidth=4;x.lineCap="round";x.lineJoin="round";x.strokeStyle="#12263f";
+  var dr=false;padDirty=false;
+  function pos(e){var r=c.getBoundingClientRect();return[(e.clientX-r.left)*c.width/r.width,(e.clientY-r.top)*c.height/r.height]}
+  c.onpointerdown=function(e){dr=true;try{c.setPointerCapture(e.pointerId)}catch(_){}var p=pos(e);x.beginPath();x.moveTo(p[0],p[1]);x.lineTo(p[0]+.1,p[1]+.1);x.stroke();padDirty=true;e.preventDefault()};
+  c.onpointermove=function(e){if(!dr)return;var p=pos(e);x.lineTo(p[0],p[1]);x.stroke();e.preventDefault()};
+  c.onpointerup=c.onpointercancel=function(){dr=false};
+}
+function trimPad(c){
+  var w=c.width,h=c.height,d=c.getContext("2d").getImageData(0,0,w,h).data,x0=w,y0=h,x1=0,y1=0;
+  for(var y=0;y<h;y++)for(var x=0;x<w;x++)if(d[(y*w+x)*4+3]>10){if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y}
+  if(x1<x0)return "";
+  var m=6;x0=Math.max(0,x0-m);y0=Math.max(0,y0-m);x1=Math.min(w-1,x1+m);y1=Math.min(h-1,y1+m);
+  var o=document.createElement("canvas");o.width=x1-x0+1;o.height=y1-y0+1;o.getContext("2d").drawImage(c,x0,y0,o.width,o.height,0,0,o.width,o.height);
+  return o.toDataURL("image/png");
+}
+function shrinkPng(file,cb){
+  var r=new FileReader();
+  r.onload=function(){var im=new Image();im.onload=function(){
+    var k=Math.min(1,420/Math.max(im.width,im.height)),c=document.createElement("canvas");
+    c.width=im.width*k;c.height=im.height*k;c.getContext("2d").drawImage(im,0,0,c.width,c.height);cb(c.toDataURL("image/png"))};im.src=r.result};
+  r.readAsDataURL(file);
+}
+function settingsView(){
+  var c=db.clinic,T=[["teal","فيروزي","#0f766e"],["violet","بنفسجي","#6a4cc4"],["gold","ذهبي","#a8761f"]];
+  var h='<button class="back" data-a="closeset">› رجوع</button><div class="card"><div class="sh"><h3>بيانات العيادة (بتظهر بالطباعة)</h3></div>'+
+  '<label>اسم العيادة</label><input id="c_n" value="'+esc(c.name)+'"><label>اسم الدكتور</label><input id="c_d" value="'+esc(c.doctor)+'"><label>هاتف العيادة</label><input id="c_p" value="'+esc(c.phone)+'"><label>العنوان</label><input id="c_a" value="'+esc(c.addr)+'"><button class="p" data-a="saveclinic">حفظ</button></div>'+
+  '<div class="card"><div class="sh"><h3>الثيم</h3></div><div class="th">';
+  T.forEach(function(t){h+='<button data-a="settheme" data-v="'+t[0]+'" class="'+(db.th===t[0]?"on":"")+'" style="background:'+t[2]+'">'+t[1]+'</button>'});
+  h+='</div><button class="s" data-a="dark" style="margin-top:12px;width:100%">الوضع الليلي '+(db.dk?'(مفعّل)':'')+'</button></div>'+
+  '<div class="card"><div class="sh"><h3>التوقيع والختم (بيظهروا على الوصفات والكشوفات)</h3></div>'+sigPrev()+'<label>ارسم توقيعك بإصبعك</label><canvas id="sigpad" width="600" height="220"></canvas><div class="row" style="margin-top:10px"><button class="s" data-a="clrpad">مسح</button><button class="s" data-a="savesig">حفظ كتوقيع</button></div><div class="row" style="margin-top:10px"><button class="s" data-a="picksig">رفع صورة توقيع</button><button class="s" data-a="pickstamp">رفع صورة ختم</button></div><input id="sig_f" type="file" accept="image/*" hidden><input id="stamp_f" type="file" accept="image/*" hidden></div>'+
+  '<div class="card"><div class="sh"><h3>كلمة سر الدكتور</h3></div><input id="c_w" type="password" placeholder="كلمة سر جديدة"><button class="p" data-a="savepw">تغيير</button></div>';
+  return h;
+}
+function patientView(p,edit){
+  var f={info:tInfo,appts:tAppts,chat:tChat,sessions:tSessions,pay:tPay,rx:tRx,img:tImg}[S.tab];
+  var r=Number(p.total||0)-paid(p);
+  var h=(edit?'<button class="back" data-a="back">› كل المرضى</button>':'')+
+   '<div class="hero"><div class="top"><div class="av">'+esc(p.name.charAt(0))+'</div><div><b>'+esc(p.name)+'</b><small>'+esc(p.phone)+'</small></div></div>'+
+   '<div class="chips"><span class="chip">'+p.sessions.length+' جلسة</span><span class="chip">المتبقي: '+money(p,r)+'</span><span class="chip">'+p.rx.length+' وصفة</span>'+(nextAppt(p)?'<span class="chip">📅 '+esc(nextAppt(p).date)+' · '+ST[nextAppt(p).status][edit?0:2]+'</span>':'')+'</div>'+PRINT_BTN("pfile",null,"طباعة الملف كاملاً")+'</div>';
+  return h+f(p,edit);
+}
+function tInfo(p,e){
+  if(!e)return patNews(p)+'<div class="card"><div class="sh"><h3>حالتي</h3></div><div class="pre">'+(esc(p.condition)||'—')+'</div></div><div class="card"><div class="sh"><h3>خطة العلاج</h3></div><div class="pre">'+(esc(p.plan)||'—')+'</div></div>';
+  return '<div class="card"><label>الاسم</label><input id="f_name" value="'+esc(p.name)+'"><div class="row"><div><label>الهاتف</label><input id="f_phone" value="'+esc(p.phone)+'"></div><div><label>رمز الدخول</label><input id="f_code" value="'+esc(p.code)+'"></div></div>'+
+  '<label>الحالة</label><textarea id="f_cond">'+esc(p.condition)+'</textarea><label>خطة العلاج</label><textarea id="f_plan">'+esc(p.plan)+'</textarea><button class="p" data-a="saveinfo">حفظ</button><button class="d" data-a="delpat" style="margin-top:14px">حذف المريض</button></div>';
+}
+function tSessions(p,e){
+  var h='';
+  if(e)h+='<div class="card"><div class="sh"><h3>جلسة جديدة</h3></div><input id="s_d" type="date" value="'+today()+'"><label>شو انعمل؟</label><textarea id="s_w"></textarea><button class="p" data-a="addses">إضافة</button></div>';
+  h+='<div class="card"><div class="sh"><h3>ما أُنجز</h3>'+(p.sessions.length?PRINT_BTN("pses"):'')+'</div>';
+  if(!p.sessions.length)return h+'<div class="empty">لا يوجد بعد</div></div>';
+  h+='<div class="tl">';
+  sortD(p.sessions).forEach(function(s){h+='<div class="ti"><div class="dt">'+esc(s.date)+'</div><div class="pre">'+esc(s.work)+'</div>'+(e?'<button class="d" data-a="del" data-k="sessions" data-id="'+s.id+'">حذف</button>':'')+'</div>'});
+  return h+'</div></div>';
+}
+function tPay(p,e){
+  var pd=paid(p),tot=Number(p.total||0),rem=tot-pd,pct=tot>0?Math.min(100,Math.round(pd/tot*100)):0,C=2*Math.PI*42;
+  var h='<div class="card"><div class="ring"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="42" fill="none" stroke="var(--b)" stroke-width="10"/><circle cx="50" cy="50" r="42" fill="none" stroke="var(--g)" stroke-width="10" stroke-linecap="round" stroke-dasharray="'+(C*pct/100)+' '+C+'"/><text x="50" y="56" text-anchor="middle" font-size="20" font-weight="700" fill="var(--t)" transform="rotate(90 50 50)">'+pct+'%</text></svg>'+
+  '<div class="k"><div>الإجمالي <b>'+money(p,tot)+'</b></div><div>المدفوع <b style="color:var(--g)">'+money(p,pd)+'</b></div><div>المتبقي <b style="color:'+(rem>0?"var(--r)":"var(--g)")+'">'+money(p,rem)+'</b></div></div></div></div>';
+  if(e)h+='<div class="card"><div class="sh"><h3>إجمالي العلاج</h3></div><div class="row"><div><label>الإجمالي</label><input id="p_t" type="number" inputmode="decimal" value="'+esc(p.total)+'"></div><div><label>العملة</label><input id="p_c" value="'+esc(p.cur)+'"></div></div><button class="s" data-a="savetot" style="margin-top:10px">حفظ</button><hr style="border:0;border-top:1px dashed var(--b);margin:16px 0"><div class="sh"><h3>دفعة جديدة</h3></div><div class="row"><div><label>التاريخ</label><input id="p_d" type="date" value="'+today()+'"></div><div><label>المبلغ</label><input id="p_a" type="number" inputmode="decimal"></div></div><button class="p" data-a="addpay">تسجيل دفعة</button></div>';
+  h+='<div class="card"><div class="sh"><h3>سجل الدفعات</h3>'+(p.payments.length?PRINT_BTN("ppay"):'')+'</div>';
+  if(!p.payments.length)h+='<div class="empty">لا يوجد دفعات</div>';
+  sortD(p.payments).forEach(function(x){h+='<div class="pay"><div class="av" style="width:38px;height:38px;border-radius:12px;background:var(--c2);color:var(--g);font-size:16px">✓</div><div class="x"><b>'+money(p,x.amount)+'</b><div class="dt">'+esc(x.date)+'</div></div>'+(e?'<button class="d" data-a="del" data-k="payments" data-id="'+x.id+'">حذف</button>':'')+'</div>'});
+  return h+'</div>';
+}
+function tRx(p,e){
+  var h='';
+  if(e)h+='<div class="card"><div class="sh"><h3>وصفة جديدة</h3></div><input id="r_d" type="date" value="'+today()+'"><label>الأدوية والجرعات (كل دواء بسطر)</label><textarea id="r_t"></textarea><button class="p" data-a="addrx">إضافة</button></div>';
+  h+='<div class="card"><div class="sh"><h3>الوصفات الدوائية</h3>'+(p.rx.length>1?PRINT_BTN("prxall","","طباعة الكل"):'')+'</div>';
+  if(!p.rx.length)h+='<div class="empty">لا يوجد</div>';
+  sortD(p.rx).forEach(function(x){h+='<div class="rx"><span class="sym">℞</span><div class="dt">'+esc(x.date)+'</div><div class="pre">'+esc(x.text)+'</div><div class="act">'+PRINT_BTN("prx",x.id)+(e?'<button class="d" data-a="del" data-k="rx" data-id="'+x.id+'">حذف</button>':'')+'</div></div>'});
+  return h+'</div>';
+}
+function tImg(p,e){
+  var h='';
+  if(e)h+='<div class="card"><div class="sh"><h3>رفع صورة</h3></div><input id="i_l" placeholder="وصف (مثال: أشعة بانوراما)"><label>الصورة</label><input id="i_f" type="file" accept="image/*"><button class="p" data-a="addimg">رفع</button></div>';
+  h+='<div class="card"><div class="sh"><h3>الصور والأشعة</h3></div>';
+  if(!p.images.length)return h+'<div class="empty">لا يوجد صور</div></div>';
+  h+='<div class="grid">';
+  sortD(p.images).forEach(function(i){h+='<figure><img src="'+i.src+'" data-a="big" data-id="'+i.id+'"><figcaption>'+esc(i.label||'صورة')+' · '+esc(i.date)+(e?' <button class="d" data-a="del" data-k="images" data-id="'+i.id+'">حذف</button>':'')+'</figcaption></figure>'});
+  return h+'</div></div>';
+}
+
+// ---------- المواعيد ----------
+var ST={req:["طلب حجز بانتظار تأكيدك","bd-y","بانتظار تأكيد العيادة"],pending:["بانتظار رد المريض","bd-y","بانتظار ردك"],confirmed:["مؤكد","bd-g","مؤكد"],no:["ما رح يجي","bd-r","ما رح إجي"],resched:["طلب تغيير","bd-b","طلبت تغيير الموعد"],cancel:["ملغي","bd-r","ملغي"],done:["تم الحضور","bd-g","تم الحضور"],missed:["ما حضر","bd-r","ما حضرت"]};
+var MON=["كانون الثاني","شباط","آذار","نيسان","أيار","حزيران","تموز","آب","أيلول","تشرين الأول","تشرين الثاني","كانون الأول"];
+var DAY=["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
+function dayName(d){return DAY[new Date(d+"T00:00:00").getDay()]}
+function isUp(x){return x.date>=today()&&x.status!=="done"&&x.status!=="missed"&&x.status!=="cancel"}
+function apSort(a,b){return (a.date+a.time)<(b.date+b.time)?-1:1}
+function nextAppt(p){return p.appts.filter(isUp).sort(apSort)[0]}
+function apCard(p,x,e){
+  var up=isUp(x),s=ST[x.status]||ST.pending;
+  var h='<div class="ap'+(up?'':' past')+'"><div class="dtb"><b>'+esc(x.date.slice(8))+'</b><span>'+MON[Number(x.date.slice(5,7))-1]+'</span></div><div class="x">'+
+   '<div><b>'+dayName(x.date)+(x.time?' · '+esc(x.time):'')+'</b> <span class="badge '+s[1]+'">'+s[e?0:2]+'</span></div>'+
+   (x.note?'<div class="dt" style="margin-top:3px">'+esc(x.note)+'</div>':'')+
+   (x.moved?'<div class="dt" style="margin-top:3px;color:var(--c)">'+(e?'غيّرت الموعد':'الدكتور غيّر الموعد')+' (كان '+esc(x.moved)+')</div>':'')+
+   (x.pnote?'<div class="dt" style="margin-top:3px;color:var(--c)">'+(e?'ملاحظة المريض: ':'ملاحظتك: ')+esc(x.pnote)+'</div>':'');
+  if(x.status==='resched'&&x.rdate)h+='<div class="rq"><span>'+(e?'المريض بيطلب:':'الموعد يلي طلبته:')+' <b>'+esc(x.rdate)+(x.rtime?' · '+esc(x.rtime):'')+'</b></span>'+(e?'<button class="s" data-a="accrs" data-id="'+x.id+'">قبول الموعد الجديد</button>':'')+'</div>';
+  if(e){
+    var o=[["confirmed","تأكيد الموعد"],["cancel","إلغاء الموعد"],["done","تم الحضور"],["missed","ما حضر"]];
+    h+='<div class="sts">';
+    o.forEach(function(k){h+='<button data-a="setst" data-id="'+x.id+'" data-v="'+k[0]+'" class="'+(x.status===k[0]?"on":"")+'">'+k[1]+'</button>'});
+    h+='<button data-a="edap" data-id="'+x.id+'" class="'+(S.edAp===x.id?"on":"")+'">تغيير الموعد</button></div>';
+    if(S.edAp===x.id)h+='<div class="pnl"><div class="row"><div><label>التاريخ الجديد</label><input id="e_d_'+x.id+'" type="date" value="'+esc(x.date)+'"></div><div><label>الساعة</label><input id="e_t_'+x.id+'" type="time" value="'+esc(x.time)+'"></div></div><button class="p" data-a="moveap" data-id="'+x.id+'">حفظ وإرسال للمريض</button></div>';
+    h+='<button class="d" data-a="del" data-k="appts" data-id="'+x.id+'">حذف الموعد</button>';
+  }else if(up&&x.status!=="req"){
+    var po=[["setst","confirmed","بدي إجي"],["setst","no","ما رح إجي"],["rsopen","resched","بدي أغيّر الموعد"]];
+    h+='<div class="sts">';
+    po.forEach(function(k){h+='<button data-a="'+k[0]+'" data-id="'+x.id+'" data-v="'+k[1]+'" class="'+(x.status===k[1]?"on":"")+'">'+k[2]+'</button>'});
+    h+='</div>';
+    if(S.rsAp===x.id)h+='<div class="pnl"><div class="row"><div><label>التاريخ يلي بيناسبك</label><input id="r_d_'+x.id+'" type="date" value="'+esc(x.rdate||x.date)+'"></div><div><label>الساعة</label><input id="r_t_'+x.id+'" type="time" value="'+esc(x.rtime||x.time)+'"></div></div><button class="p" data-a="sendrs" data-id="'+x.id+'">إرسال طلب التغيير</button></div>';
+    h+='<input class="pn" id="n_'+x.id+'" placeholder="ملاحظة للدكتور (اختياري)" value="'+esc(x.pnote||"")+'">';
+  }
+  return h+'</div></div>';
+}
+function tAppts(p,e){
+  var h='';
+  if(e)h+='<div class="card"><div class="sh"><h3>موعد جديد</h3></div><div class="row"><div><label>التاريخ</label><input id="a_d" type="date" value="'+addDays(7)+'"></div><div><label>الساعة</label><input id="a_t" type="time" value="10:00"></div></div><label>سبب الموعد</label><input id="a_n" placeholder="مثال: حشوة، تنظيف، متابعة"><button class="p" data-a="addappt">إضافة موعد</button></div>';else h+='<div class="card"><div class="sh"><h3>طلب موعد جديد</h3></div><div class="row"><div><label>التاريخ المفضل</label><input id="pb_d" type="date" value="'+addDays(7)+'"></div><div><label>الساعة</label><input id="pb_t" type="time" value="10:00"></div></div><label>سبب الزيارة</label><input id="pb_n" placeholder="مثال: متابعة، ألم، تنظيف"><button class="p" data-a="patreq">إرسال الطلب</button></div>';
+  var up=p.appts.filter(isUp).sort(apSort);
+  var pa=p.appts.filter(function(x){return !isUp(x)}).sort(function(a,b){return apSort(b,a)});
+  h+='<div class="card"><div class="sh"><h3>المواعيد القادمة</h3>'+(p.appts.length?PRINT_BTN("pappt"):'')+'</div>';
+  if(!up.length)h+='<div class="empty">لا يوجد مواعيد قادمة</div>';
+  up.forEach(function(x){h+=apCard(p,x,e)});
+  h+='</div>';
+  if(pa.length){h+='<div class="card"><div class="sh"><h3>مواعيد سابقة</h3></div>';pa.forEach(function(x){h+=apCard(p,x,e)});h+='</div>'}
+  if(!e)h+='<div class="note">اختار ردك على كل موعد: «بدي إجي» أو «ما رح إجي» أو «بدي أغيّر الموعد» (وبتحدد التاريخ والوقت يلي بيناسبك). الدكتور بيشوف ردك فوراً.</div>';
+  return h;
+}
+function tblAppts(p){
+  var h='<table><tr><th style="width:36px">#</th><th>التاريخ</th><th>اليوم</th><th>الساعة</th><th>السبب</th><th>الحالة</th></tr>';
+  p.appts.slice().sort(apSort).forEach(function(x,i){h+='<tr><td>'+(i+1)+'</td><td>'+esc(x.date)+'</td><td>'+dayName(x.date)+'</td><td>'+esc(x.time)+'</td><td>'+esc(x.note)+'</td><td>'+(ST[x.status]||ST.pending)[0]+'</td></tr>'});
+  return h+'</table>';
+}
+
+
+// ---------- حجز مرضى جدد ----------
+var RQ={new:["بانتظار رد العيادة","bd-y"],accepted:["تم تأكيد موعدك","bd-g"],rejected:["تعذّر الحجز، تواصل مع العيادة","bd-r"]};
+function samePh(a,b){a=String(a).replace(/\D/g,"").slice(-9);b=String(b).replace(/\D/g,"").slice(-9);return !!a&&a===b}
+function reqForm(){
+  var h='<div class="sh"><h3>حجز دور</h3></div><div class="dt">سواء أول مرة عنا، أو كنت مريضنا وبدك ترجع، أو ما عندك موعد محدد: اترك بياناتك والعيادة بتتواصل معك لتأكيد الموعد.</div><label>إنت</label><select id="q_k"><option value="new">أول مرة بزور العيادة</option><option value="old">مريض سابق عندكم</option></select>'+
+  '<label>الاسم</label><input id="q_n"><label>رقم الهاتف</label><input id="q_p" inputmode="tel"><label>سبب الزيارة</label><select id="q_r"><option>كشف وفحص</option><option>ألم بالأسنان</option><option>تنظيف وتلميع</option><option>تجميل / ابتسامة</option><option>تقويم</option><option>غير ذلك</option></select>'+
+  '<div class="row"><div><label>التاريخ المفضل</label><input id="q_d" type="date" value="'+addDays(2)+'"></div><div><label>الوقت المفضل</label><input id="q_t" type="time" value="10:00"></div></div><label>ملاحظة (اختياري)</label><input id="q_x"><button class="p" data-a="sendreq">إرسال طلب الحجز</button>'+
+  '<hr style="border:0;border-top:1px dashed var(--b);margin:18px 0 6px"><div class="sh"><h3>تابع طلبك</h3></div><div class="row" style="align-items:center"><input id="ck_p" inputmode="tel" placeholder="رقم هاتفك" value="'+esc(S.chkph)+'"><button class="s" data-a="chkreq" style="flex:none">عرض</button></div>';
+  if(S.chkph){
+    var l=db.reqs.filter(function(r){return r.phone===S.chkph}).sort(function(a,b){return b.ts-a.ts});
+    if(!l.length)h+='<div class="empty">ما في طلبات بهالرقم</div>';
+    l.forEach(function(r){var s=RQ[r.status]||RQ.new;h+='<div class="rq"><span class="badge '+s[1]+'">'+s[0]+'</span><span>'+esc(r.reason)+(r.status==="accepted"?' · '+esc(r.cdate)+' '+esc(r.ctime):'')+'</span></div>'});
+  }
+  return h;
+}
+function reqsAdmin(){
+  var l=db.reqs.slice().sort(function(a,b){return (a.status==="new"?0:1)-(b.status==="new"?0:1)||b.ts-a.ts});
+  if(!l.length)return '<div class="empty">ما في طلبات حجز بعد. لما يحجز مريض جديد من شاشة الدخول بيظهر طلبه هون.</div>';
+  var h='';
+  l.forEach(function(r){
+    var s=RQ[r.status]||RQ.new,ph=r.phone.replace(/[^\d+]/g,""),ex=db.patients.find(function(x){return samePh(x.phone,r.phone)});
+    h+='<div class="card"><div class="pl" style="cursor:default"><div class="av">'+esc(r.name.charAt(0))+'</div><div style="flex:1;min-width:0"><b>'+esc(r.name)+'</b><div class="dt">'+esc(r.phone)+' · '+fmtTs(r.ts)+'</div></div><span class="badge '+s[1]+'">'+(r.status==="new"?"جديد":r.status==="accepted"?"مقبول":"مرفوض")+'</span></div><div style="margin-top:8px"><span class="badge '+(ex?"bd-g":"bd-b")+'">'+(ex?"مريض سابق: "+esc(ex.name):"مريض جديد")+'</span>'+(!ex&&r.kind==="old"?' <span class="dt">قال إنه مريض سابق لكن رقمه مو بملفاتك</span>':'')+'</div>'+
+    '<div style="margin-top:10px"><b>'+esc(r.reason)+'</b><div class="dt">يفضّل: '+dayName(r.date)+' '+esc(r.date)+' · '+esc(r.time)+'</div>'+(r.note?'<div class="dt">'+esc(r.note)+'</div>':'')+(r.status==="accepted"?'<div class="dt" style="color:var(--c)">الموعد المؤكد: '+esc(r.cdate)+' · '+esc(r.ctime)+'</div>':'')+'</div>';
+    if(r.status==="new")h+='<div class="pnl"><div class="row"><div><label>تاريخ الموعد</label><input id="qd_'+r.id+'" type="date" value="'+esc(r.date)+'"></div><div><label>الساعة</label><input id="qt_'+r.id+'" type="time" value="'+esc(r.time)+'"></div></div><button class="p" data-a="reqacc" data-id="'+r.id+'">'+(ex?"قبول وإضافة الموعد لملفه":"قبول وإضافته كمريض")+'</button></div>';
+    h+='<div class="row" style="margin-top:10px;align-items:center"><a class="s" href="tel:'+esc(ph)+'">اتصال</a>'+(ex?'<button class="s" data-a="open" data-id="'+ex.id+'">فتح ملفه</button>':'')+(r.status==="new"?'<button class="s" data-a="reqrej" data-id="'+r.id+'">رفض</button>':'')+'<button class="d" data-a="reqdel" data-id="'+r.id+'" style="flex:none">حذف</button></div></div>';
+  });
+  return h;
+}
+
+// ---------- الاستشارة (محادثة) ----------
+function pad2(n){return ("0"+n).slice(-2)}
+function fmtTs(t){var d=new Date(t);return pad2(d.getMonth()+1)+"-"+pad2(d.getDate())+" "+pad2(d.getHours())+":"+pad2(d.getMinutes())}
+function unread(p,forDoc){return p.chat.filter(function(m){return !m.r&&m.from===(forDoc?"pat":"doc")}).length}
+function markRead(p,forDoc){var ch=false;p.chat.forEach(function(m){if(!m.r&&m.from===(forDoc?"pat":"doc")){m.r=1;ch=true}});if(ch)save()}
+function tChat(p,e){
+  markRead(p,e);
+  var me=e?"doc":"pat",h='';
+  if(!e)h+='<div class="warn">للحالات الطارئة (صعوبة بالتنفس أو البلع، تورم شديد بالوجه أو الرقبة، نزيف ما بيوقف) اتصل بالطوارئ فوراً ولا تنتظر الرد هون.</div>';
+  h+='<div class="card"><div class="sh"><h3>'+(e?'محادثة مع '+esc(p.name):'استشارة الدكتور')+'</h3></div><div id="msgs">';
+  if(!p.chat.length)h+='<div class="empty">'+(e?'ما في رسائل بعد':'اكتب للدكتور إذا عندك ألم مفاجئ أو أي مضاعفات بعد العلاج')+'</div>';
+  p.chat.forEach(function(m){
+    h+='<div class="msg '+(m.from===me?'me':'ot')+(m.urg?' urg':'')+'">'+(m.urg?'<span class="badge bd-r">عاجل</span> ':'')+(m.img?'<img src="'+m.img+'" data-a="bigc" data-id="'+m.id+'">':'')+(m.text?'<div class="pre">'+esc(m.text)+'</div>':'')+'<div class="mt">'+fmtTs(m.ts)+'</div></div>';
+  });
+  h+='</div><div class="cmp"><div id="c_prev">'+(S.pimg?'<img src="'+S.pimg+'"> <button class="d" data-a="rmimg">إزالة</button>':'')+'</div><textarea id="c_t" placeholder="اكتب رسالتك...">'+esc(S.draft)+'</textarea><div class="row" style="margin-top:8px;align-items:center"><button class="s" data-a="pick" style="flex:none">📷 صورة</button><input id="c_f" type="file" accept="image/*" hidden>'+(!e?'<button class="s'+(S.urgent?' on':'')+'" data-a="urg" style="flex:none">⚠ عاجل</button>':'')+'<button class="p" style="margin:0" data-a="send">إرسال</button></div></div></div>';
+  return h;
+}
+
+// ---------- الطباعة ----------
+var PV={html:"",name:"document"};
+function canShareFiles(){try{return !!(navigator.canShare&&navigator.canShare({files:[new File(["x"],"a.html",{type:"text/html"})]}))}catch(e){return false}}
+function doPrint(html,name){
+  PV.html=html;PV.name=name||"document";
+  var pv=document.getElementById("pv");
+  pv.innerHTML='<div class="tb"><button class="pb main" data-a="pvprint">'+ico('print')+'طباعة</button><button class="pb" data-a="pvdl">تنزيل الملف</button>'+(canShareFiles()?'<button class="pb" data-a="pvshare">مشاركة</button>':'')+'<button class="pb" data-a="pvclose">إغلاق ✕</button></div><div id="print">'+html+'</div>';
+  pv.className="on";pv.scrollTop=0;document.body.style.overflow="hidden";
+}
+function pvDoc(){
+  var css=document.querySelector("style").textContent;
+  return '<!DOCTYPE html><html lang="ar" dir="rtl" data-th="'+document.documentElement.dataset.th+'" data-dk="off"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(PV.name)+'</title><style>'+css+'</style></head><body><div id="pv" class="on"><div class="tb"><button class="pb main" onclick="window.print()">طباعة</button></div><div id="print">'+PV.html+'</div></div></body></html>';
+}
+function pvAction(a){
+  var pv=document.getElementById("pv");
+  if(a==="pvclose"){pv.className="";pv.innerHTML="";document.body.style.overflow=""}
+  else if(a==="pvprint"){try{window.print()}catch(e){alert("الطباعة مو مدعومة هون. اضغط تنزيل الملف وافتحه بالمتصفح وطبعه.")}}
+  else if(a==="pvdl"){
+    var u=URL.createObjectURL(new Blob([pvDoc()],{type:"text/html"})),l=document.createElement("a");
+    l.href=u;l.download=PV.name+".html";document.body.appendChild(l);l.click();l.remove();setTimeout(function(){URL.revokeObjectURL(u)},4000);
+  }
+  else if(a==="pvshare"){try{navigator.share({files:[new File([pvDoc()],PV.name+".html",{type:"text/html"})],title:PV.name}).catch(function(){})}catch(e){}}
+}
+function pHead(p,title){
+  var c=db.clinic;
+  return '<div class="ph"><div class="pn"><svg viewBox="0 0 24 24"><path d="'+TOOTH+'"/></svg><div><b>'+esc(c.name)+'</b><span>'+esc(c.doctor)+'</span><span>'+esc(c.phone)+(c.addr?' · '+esc(c.addr):'')+'</span></div></div><div style="text-align:left"><b style="font-size:15px">'+esc(title)+'</b><span style="display:block;color:#555;font-size:12px">'+today()+'</span></div></div>'+
+  '<div class="pi"><span>المريض: <b>'+esc(p.name)+'</b></span><span>الهاتف: '+esc(p.phone)+'</span></div>';
+}
+function sigBlock(){var c=db.clinic;return '<div class="sig"><div class="sb"><div class="si">'+(c.stamp?'<img src="'+c.stamp+'">':'')+(c.sig?'<img src="'+c.sig+'">':'')+'</div><div class="sline">'+(esc(c.doctor)||'')+' · توقيع وختم الدكتور</div></div></div>'}
+var pFoot='<div class="ft">'+'وثيقة صادرة عن العيادة</div>';
+function tblSessions(p){
+  var h='<table><tr><th style="width:36px">#</th><th style="width:100px">التاريخ</th><th>العمل المنجز</th></tr>';
+  var l=p.sessions.slice().sort(function(a,b){return a.date<b.date?-1:1});
+  l.forEach(function(s,i){h+='<tr><td>'+(i+1)+'</td><td>'+esc(s.date)+'</td><td class="wm">'+esc(s.work)+'</td></tr>'});
+  return h+'</table>';
+}
+function tblPay(p){
+  var tot=Number(p.total||0),pd=paid(p),run=tot;
+  var h='<div class="tot"><div>الإجمالي<b>'+money(p,tot)+'</b></div><div>المدفوع<b>'+money(p,pd)+'</b></div><div>المتبقي<b>'+money(p,tot-pd)+'</b></div></div>';
+  h+='<table><tr><th style="width:36px">#</th><th>التاريخ</th><th>المبلغ</th><th>المتبقي بعد الدفعة</th></tr>';
+  p.payments.slice().sort(function(a,b){return a.date<b.date?-1:1}).forEach(function(x,i){run-=Number(x.amount);h+='<tr><td>'+(i+1)+'</td><td>'+esc(x.date)+'</td><td>'+money(p,x.amount)+'</td><td>'+money(p,run)+'</td></tr>'});
+  return h+'</table>';
+}
+function rxPage(p,x){
+  var items=x.text.split("\n").filter(function(l){return l.trim()}).map(function(l){return '<li>'+esc(l)+'</li>'}).join("");
+  return '<div class="pg">'+pHead(p,"وصفة طبية")+'<div class="rxs">℞</div><div style="color:#555;font-size:12px">تاريخ الوصفة: '+esc(x.date)+'</div><ol>'+items+'</ol>'+sigBlock()+''+pFoot+'</div>';
+}
+function printAction(a,p,id){
+  if(a==="pses")doPrint(pHead(p,"سجل الجلسات والعمل المنجز")+tblSessions(p)+pFoot,"جلسات-"+p.name);
+  else if(a==="ppay")doPrint(pHead(p,"كشف الأقساط والدفعات")+tblPay(p)+sigBlock()+pFoot,"أقساط-"+p.name);
+  else if(a==="prx")doPrint(rxPage(p,p.rx.find(function(x){return x.id===id})),"وصفة-"+p.name);
+  else if(a==="prxall")doPrint(sortD(p.rx).map(function(x){return rxPage(p,x)}).join(""),"وصفات-"+p.name);
+  else if(a==="pfile"){
+    var h=pHead(p,"الملف الطبي")+'<h2>الحالة</h2><div class="wm">'+(esc(p.condition)||'—')+'</div><h2>خطة العلاج</h2><div class="wm">'+(esc(p.plan)||'—')+'</div>';
+    if(p.sessions.length)h+='<h2>الجلسات والعمل المنجز</h2>'+tblSessions(p);
+    h+='<h2>الأقساط</h2>'+tblPay(p);
+    if(p.rx.length){h+='<h2>الوصفات الدوائية</h2>';sortD(p.rx).forEach(function(x){h+='<div style="margin-bottom:10px"><b>'+esc(x.date)+'</b><div class="wm" style="line-height:1.9">'+esc(x.text)+'</div></div>'})}
+    doPrint(h+sigBlock()+pFoot,"ملف-"+p.name);
+  }
+  else if(a==="pappt")doPrint(pHead(p,"مواعيد المراجعة")+tblAppts(p)+pFoot,"مواعيد-"+p.name);
+}
+
+// ---------- الأحداث ----------
+function v(id){var e=document.getElementById(id);return e?e.value.trim():""}
+function shrink(file,cb){
+  var r=new FileReader();
+  r.onload=function(){var im=new Image();im.onload=function(){
+    var m=900,k=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement("canvas");
+    c.width=im.width*k;c.height=im.height*k;c.getContext("2d").drawImage(im,0,0,c.width,c.height);
+    cb(c.toDataURL("image/jpeg",.7))};im.src=r.result};
+  r.readAsDataURL(file);
+}
+document.addEventListener("input",function(e){if(e.target.id==="sq"){S.q=e.target.value;var pos=e.target.selectionStart;render();var n=document.getElementById("sq");n.focus();n.setSelectionRange(pos,pos)}});
+document.addEventListener("change",function(e){
+  if((e.target.id==="sig_f"||e.target.id==="stamp_f")&&e.target.files[0]){var isS=e.target.id==="sig_f";shrinkPng(e.target.files[0],function(src){if(isS)db.clinic.sig=src;else db.clinic.stamp=src;save();render()});return}
+  if(e.target.id!=="c_f"||!e.target.files[0])return;
+  var ct=document.getElementById("c_t");if(ct)S.draft=ct.value;
+  shrink(e.target.files[0],function(src){S.pimg=src;render()});
+});
+document.addEventListener("click",function(ev){
+  var el=ev.target.closest("[data-a]");if(!el)return;
+  var ct=document.getElementById("c_t");if(ct)S.draft=ct.value;
+  var a=el.dataset.a,p=S.pid?P():null;
+  if(!auth&&["logdoc","logpat","sendreq","patreq"].indexOf(a)>-1)return alert("ما انحمّل الاتصال بالسيرفر، تأكد من الإنترنت وجرّب من جديد");
+  if(S.role==="pat"&&(a==="setst"||a==="sendrs")){patAppt(a,el,p);return render()}
+  if(a.indexOf("pv")===0)return pvAction(a);
+  if(["pses","ppay","prx","prxall","pfile","pappt"].indexOf(a)>-1){return printAction(a,p,el.dataset.id)}
+  if(a==="mode")S.mode=el.dataset.v;
+  else if(a==="theme"){var o=["teal","violet","gold"];db.th=o[(o.indexOf(db.th)+1)%3];save()}
+  else if(a==="settheme"){db.th=el.dataset.v;save()}
+  else if(a==="dark"){db.dk=!db.dk;save()}
+  else if(a==="logout"){S.role=null;S.pid=null;S.settings=false;if(auth)auth.signOut()}
+  else if(a==="settings")S.settings=true;
+  else if(a==="closeset")S.settings=false;
+  else if(a==="saveclinic"){db.clinic={name:v("c_n")||"العيادة",doctor:v("c_d"),phone:v("c_p"),addr:v("c_a"),sig:db.clinic.sig||"",stamp:db.clinic.stamp||""};save();alert("تم الحفظ")}
+  else if(a==="savepw"){if(v("c_w").length<6)return alert("٦ خانات على الأقل");auth.currentUser.updatePassword(v("c_w")).then(function(){alert("تم التغيير")}).catch(function(e){alert("سجّل خروج وادخل من جديد وجرّب مرة تانية ("+(e.code||e.message)+")")})}
+  else if(a==="logdoc"){el.textContent="جاري الدخول…";auth.signInWithEmailAndPassword(v("em").trim().toLowerCase(),v("pw")).catch(function(){el.textContent="دخول";alert("البريد أو كلمة السر غلط")});return}
+  else if(a==="logpat"){if(!v("ph")||!v("cd"))return alert("اكتب الرقم والرمز");el.textContent="جاري الدخول…";auth.signInWithEmailAndPassword(pEmail(v("ph")),"ym#"+v("cd").trim()).catch(function(){el.textContent="دخول";alert("الرقم أو الرمز غلط")});return}
+  else if(a==="addpat"){if(!v("nn")||v("np").replace(/\D/g,"").length<7)return alert("اكتب الاسم ورقم هاتف صحيح");var npx={id:uid(),name:v("nn"),phone:v("np"),code:v("nc")||String(100000+Math.floor(Math.random()*900000)),cur:"$",condition:"",plan:"",sessions:[],total:0,payments:[],rx:[],images:[],appts:[],chat:[],seen:[]};mkAcct(npx)}
+  else if(a==="open"){S.pid=el.dataset.id;S.tab="info";window.scrollTo(0,0)}
+  else if(a==="back")S.pid=null;
+  else if(a==="tab"){S.tab=el.dataset.v;window.scrollTo(0,0)}
+  else if(a==="saveinfo"){p.name=v("f_name")||p.name;p.phone=v("f_phone");p.code=v("f_code");p.condition=document.getElementById("f_cond").value;p.plan=document.getElementById("f_plan").value;save();alert("تم الحفظ")}
+  else if(a==="delpat"){if(!confirm("حذف المريض وكل ملفه؟"))return;db.patients=db.patients.filter(function(x){return x.id!==p.id});S.pid=null;save()}
+  else if(a==="addses"){if(!v("s_w"))return;p.sessions.push({id:uid(),date:v("s_d")||today(),work:document.getElementById("s_w").value.trim()});save()}
+  else if(a==="savetot"){p.total=Number(v("p_t"))||0;p.cur=v("p_c")||"$";save()}
+  else if(a==="addpay"){var n=Number(v("p_a"));if(!n)return alert("اكتب المبلغ");p.payments.push({id:uid(),date:v("p_d")||today(),amount:n});save()}
+  else if(a==="addrx"){if(!v("r_t"))return;p.rx.push({id:uid(),date:v("r_d")||today(),text:document.getElementById("r_t").value.trim()});save()}
+  else if(a==="addappt"){if(!v("a_d"))return alert("اختار التاريخ");p.appts.push({id:uid(),date:v("a_d"),time:v("a_t"),note:v("a_n"),status:"pending",pnote:""});save()}
+  else if(a==="setst"){var ap=p.appts.find(function(x){return x.id===el.dataset.id});ap.status=el.dataset.v;db.reqs.forEach(function(r0){if(r0.apid===ap.id){if(ap.status==="confirmed"){r0.status="accepted";r0.cdate=ap.date;r0.ctime=ap.time}else if(ap.status==="cancel")r0.status="rejected"}});if(ap.status==="confirmed"||ap.status==="no"||ap.status==="cancel"){ap.rdate="";ap.rtime=""}if(S.rsAp===ap.id)S.rsAp=null;var ni=document.getElementById("n_"+ap.id);if(ni)ap.pnote=ni.value.trim();save()}
+  else if(a==="rsopen"){S.rsAp=S.rsAp===el.dataset.id?null:el.dataset.id}
+  else if(a==="sendrs"){var ap2=p.appts.find(function(x){return x.id===el.dataset.id}),id=ap2.id;if(!v("r_d_"+id))return alert("اختار التاريخ");ap2.status="resched";ap2.rdate=v("r_d_"+id);ap2.rtime=v("r_t_"+id);var n2=document.getElementById("n_"+id);if(n2)ap2.pnote=n2.value.trim();S.rsAp=null;save()}
+  else if(a==="accrs"){var ap3=p.appts.find(function(x){return x.id===el.dataset.id});ap3.moved=ap3.date;ap3.date=ap3.rdate;if(ap3.rtime)ap3.time=ap3.rtime;ap3.rdate="";ap3.rtime="";ap3.status="confirmed";save()}
+  else if(a==="edap"){S.edAp=S.edAp===el.dataset.id?null:el.dataset.id}
+  else if(a==="moveap"){var ap4=p.appts.find(function(x){return x.id===el.dataset.id}),i4=ap4.id,nd=v("e_d_"+i4);if(!nd)return alert("اختار التاريخ");if(nd!==ap4.date)ap4.moved=ap4.date;ap4.date=nd;ap4.time=v("e_t_"+i4);ap4.status="pending";ap4.rdate="";ap4.rtime="";S.edAp=null;save()}
+  else if(a==="dtab")S.dtab=el.dataset.v;
+  else if(a==="patreq"){if(!v("pb_d"))return alert("اختار التاريخ");db.reqs.push({id:uid(),name:p.name,phone:p.phone,kind:"old",reason:v("pb_n")||"موعد جديد",date:v("pb_d"),time:v("pb_t"),note:"",ts:Date.now(),status:"new",uid:FB.user.uid});save();alert("انرسل طلبك، العيادة رح تأكدلك الموعد")}
+  else if(a==="sendreq"){if(!FB.user)return alert("ما في اتصال بالسيرفر، جرّب بعد قليل");if(!v("q_n")||v("q_p").length<6)return alert("اكتب الاسم ورقم هاتف صحيح");var nq={id:uid(),name:v("q_n"),phone:v("q_p"),kind:v("q_k"),reason:v("q_r"),date:v("q_d")||today(),time:v("q_t"),note:v("q_x"),ts:Date.now(),status:"new",uid:FB.user.uid},ex0=db.patients.find(function(x){return samePh(x.phone,nq.phone)});if(ex0){var na0={id:uid(),date:nq.date,time:nq.time,note:nq.reason,status:"req",pnote:"",reqid:nq.id};ex0.appts.push(na0);nq.apid=na0.id}db.reqs.push(nq);S.chkph=v("q_p");save();alert("انرسل طلبك. العيادة رح تتواصل معك لتأكيد الموعد")}
+  else if(a==="chkreq"){S.chkph=v("ck_p")}
+  else if(a==="reqacc"){var rq=db.reqs.find(function(x){return x.id===el.dataset.id}),qd=v("qd_"+rq.id),qt=v("qt_"+rq.id);if(!qd)return alert("اختار التاريخ");var pt=db.patients.find(function(x){return samePh(x.phone,rq.phone)}),qm;if(!pt){pt={id:uid(),name:rq.name,phone:rq.phone,code:String(100000+Math.floor(Math.random()*900000)),cur:"$",condition:"",plan:"",sessions:[],total:0,payments:[],rx:[],images:[],appts:[],chat:[],seen:[]};mkAcct(pt);qm="رمز دخول المريض: "+pt.code}else qm="المريض موجود مسبقاً، انضاف الموعد لملفه";var pa0=rq.apid&&pt.appts.find(function(x){return x.id===rq.apid});if(pa0){pa0.date=qd;pa0.time=qt;pa0.status="confirmed"}else pt.appts.push({id:uid(),date:qd,time:qt,note:rq.reason,status:"confirmed",pnote:"",reqid:rq.id});rq.status="accepted";rq.cdate=qd;rq.ctime=qt;save();alert(qm+"\nبلّغه بالموعد وبالرمز")}
+  else if(a==="reqrej"){var rq2=db.reqs.find(function(x){return x.id===el.dataset.id});rq2.status="rejected";db.patients.forEach(function(q0){q0.appts.forEach(function(a0){if(a0.id===rq2.apid)a0.status="cancel"})});save()}
+  else if(a==="reqdel"){if(!confirm("حذف الطلب؟"))return;db.reqs=db.reqs.filter(function(x){return x.id!==el.dataset.id});save()}
+  else if(a==="sendnews"){if(!v("n_title"))return alert("اكتب العنوان");db.news.push({id:uid(),type:v("n_type")||"info",title:v("n_title"),text:document.getElementById("n_text").value.trim(),until:v("n_until"),ts:Date.now()});save();alert("انرسل لكل المرضى")}
+  else if(a==="delnews"){if(!confirm("حذف التعميم؟"))return;db.news=db.news.filter(function(x){return x.id!==el.dataset.id});save()}
+  else if(a==="sharenews"){var nn=db.news.find(function(x){return x.id===el.dataset.id}),tx2=newsText(nn);if(navigator.share){navigator.share({text:tx2}).catch(function(){})}else{window.open("https://wa.me/?text="+encodeURIComponent(tx2),"_blank")}return}
+  else if(a==="clrpad"){var pc=document.getElementById("sigpad");pc.getContext("2d").clearRect(0,0,pc.width,pc.height);padDirty=false;return}
+  else if(a==="savesig"){var pc2=document.getElementById("sigpad");var url=padDirty?trimPad(pc2):"";if(!url)return alert("ارسم توقيعك أولاً");db.clinic.sig=url;save()}
+  else if(a==="picksig"){document.getElementById("sig_f").click();return}
+  else if(a==="pickstamp"){document.getElementById("stamp_f").click();return}
+  else if(a==="rmsig"){db.clinic.sig="";save()}
+  else if(a==="rmstamp"){db.clinic.stamp="";save()}
+  else if(a==="openchat"){S.pid=el.dataset.id;S.tab="chat";window.scrollTo(0,0)}
+  else if(a==="urg")S.urgent=!S.urgent;
+  else if(a==="pick"){var cf=document.getElementById("c_f");if(cf)cf.click();return}
+  else if(a==="rmimg")S.pimg=null;
+  else if(a==="send"){
+    var tx=S.draft.trim();if(!tx&&!S.pimg)return;
+    p.chat.push({id:uid(),pid:p.id,uid:p.uid||"",from:S.role==="doc"?"doc":"pat",text:tx,img:S.pimg||"",urg:S.role==="pat"&&S.urgent,ts:Date.now(),r:0});
+    S.draft="";S.pimg=null;S.urgent=false;save()}
+  else if(a==="bigc"){var cm=p.chat.find(function(x){return x.id===el.dataset.id});S.big=cm&&cm.img}
+  else if(a==="addimg"){var f=document.getElementById("i_f").files[0];if(!f)return alert("اختار صورة");var lb=v("i_l");shrink(f,function(src){p.images.push({id:uid(),date:today(),label:lb,src:src});save();render()});return}
+  else if(a==="del"){if(!confirm("حذف؟"))return;var k=el.dataset.k;p[k]=p[k].filter(function(x){return x.id!==el.dataset.id})}
+  else if(a==="big"){var im=p.images.find(function(x){return x.id===el.dataset.id});S.big=im&&im.src}
+  else if(a==="closebig")S.big=null;
+  if(["del","addses","addpay","addrx","addpat","delpat"].indexOf(a)>-1)save();
+  render();
+});
+// ---------- الاتصال بـ Firebase ----------
+var CFG={apiKey:"AIzaSyBU155eBGFEMhWIQsYI8amyxMU0s7XFa4I",authDomain:"ym-dental.firebaseapp.com",projectId:"ym-dental",storageBucket:"ym-dental.firebasestorage.app",messagingSenderId:"521682229559",appId:"1:521682229559:web:6d64d5768fa33374d1e2b2"};
+var FB={user:null,mode:"",unsub:[],sent:{},pend:0,loaded:{},msgs:[]},auth=null,fs=null,CH=300000;
+try{firebase.initializeApp(CFG);auth=firebase.auth();fs=firebase.firestore()}catch(e){console.error(e)}
+function pEmail(ph){return "p"+String(ph).replace(/\D/g,"").slice(-9)+"@ym-dental.app"}
+function errH(e){console.error(e);if(!FB.err){FB.err=1;alert("خطأ بالاتصال بالسيرفر ("+(e.code||e.message)+")\nتأكد من تفعيل Firestore وقواعد الحماية")}}
+function rr(){var e=document.activeElement;if(e&&/^(INPUT|TEXTAREA|SELECT)$/.test(e.tagName)){FB.pend=1;return}render()}
+document.addEventListener("focusout",function(){if(!FB.pend)return;FB.pend=0;setTimeout(function(){var e=document.activeElement;if(e&&/^(INPUT|TEXTAREA|SELECT)$/.test(e.tagName))FB.pend=1;else render()},80)});
+function chunks(s){var o=[],p=0;while(p<s.length||!o.length){var e=Math.min(p+CH,s.length);if(e<s.length){var c=s.charCodeAt(e-1);if(c>=0xD800&&c<=0xDBFF)e--}o.push(s.slice(p,e));p=e}return o}
+function syncOut(){
+  if(!auth||!FB.user)return;
+  var b=fs.batch(),n=0,sent=FB.sent,keys=[];
+  function put(col,id,obj,key){var j=JSON.stringify(obj);if(sent[key]===j)return;sent[key]=j;keys.push(key);b.set(fs.collection(col).doc(id),obj);n++}
+  function del(col,id,key){delete sent[key];b.delete(fs.collection(col).doc(id));n++}
+  function pat(p){var q=Object.assign({},p);delete q.chat;delete q.seen;var c=chunks(JSON.stringify(q));c.forEach(function(s,i){put("pc",p.id+"_"+i,{pid:p.id,i:i,uid:p.uid||"",s:s},"c_"+p.id+"_"+i)});
+    Object.keys(sent).forEach(function(k){if(k.indexOf("c_"+p.id+"_")===0){var i=+k.split("_").pop();if(i>=c.length)del("pc",p.id+"_"+i,k)}})}
+  function col(arr,pre,name){arr.forEach(function(x){put(name,x.id,x,pre+x.id)});Object.keys(sent).forEach(function(k){if(k.indexOf(pre)===0&&!arr.some(function(x){return pre+x.id===k}))del(name,k.slice(pre.length),k)})}
+  function msgs(p){p.chat.forEach(function(m){put("msgs",m.id,m,"m_"+m.id)})}
+  function ups(arr,name,pre){arr.forEach(function(x){put(name,x.id,x,pre+x.id)})}
+  if(FB.mode==="vis"){ups(db.reqs,"reqs","r_")}
+  else if(FB.mode==="pat"){db.patients.forEach(msgs);ups(db.areq,"areq","a_");ups(db.reqs,"reqs","r_")}
+  else if(FB.mode==="doc"){
+    put("meta","main",{clinic:db.clinic,th:db.th,dk:db.dk},"m");
+    col(db.news,"n_","news");col(db.reqs,"r_","reqs");col(db.areq,"a_","areq");
+    db.patients.forEach(function(p){pat(p);msgs(p)});
+    Object.keys(sent).forEach(function(k){if(k.indexOf("c_")===0){var a=k.split("_");if(!db.patients.some(function(p){return p.id===a[1]}))del("pc",a[1]+"_"+a[2],k)}});
+  }
+  if(n)b.commit().catch(function(e){keys.forEach(function(k){delete FB.sent[k]});errH(e)});
+}
+function fixP(p){p.appts=p.appts||[];p.chat=p.chat||[];p.seen=p.seen||[];p.sessions=p.sessions||[];p.payments=p.payments||[];p.rx=p.rx||[];p.images=p.images||[];return p}
+function applyPC(sn){
+  var g={},sent=FB.sent;Object.keys(sent).forEach(function(k){if(k.indexOf("c_")===0)delete sent[k]});
+  sn.forEach(function(d){var x=d.data();(g[x.pid]=g[x.pid]||[]).push(x);sent["c_"+x.pid+"_"+x.i]=JSON.stringify({pid:x.pid,i:x.i,uid:x.uid,s:x.s})});
+  var l=[];Object.keys(g).forEach(function(k){try{l.push(fixP(JSON.parse(g[k].sort(function(a,b){return a.i-b.i}).map(function(x){return x.s}).join(""))))}catch(e){console.error("bad patient",k,e)}});
+  if(FB.mode==="pat")l.forEach(function(p){p.seen=lsSeen(p.id)});l.sort(function(a,b){return String(a.name).localeCompare(b.name,"ar")});db.patients=l;assemble();overlayAll();
+}
+function applyCol(sn,pre,fld){var o=[];Object.keys(FB.sent).forEach(function(k){if(k.indexOf(pre)===0)delete FB.sent[k]});sn.forEach(function(d){var x=d.data();FB.sent[pre+d.id]=JSON.stringify(x);o.push(x)});db[fld]=o}
+function lsSeen(id){try{return JSON.parse(localStorage.getItem("seen_"+id)||"[]")}catch(e){return[]}}
+function byTs(a,b){return a.ts-b.ts}
+function applyMsgs(sn){FB.msgs=[];Object.keys(FB.sent).forEach(function(k){if(k.indexOf("m_")===0)delete FB.sent[k]});sn.forEach(function(d){var x=d.data();FB.sent["m_"+d.id]=JSON.stringify(x);FB.msgs.push(x)})}
+function assemble(){db.patients.forEach(function(p){p.chat=FB.msgs.filter(function(m){return m.pid===p.id&&m.uid===(p.uid||"")}).sort(byTs)})}
+function ovr(r,real){
+  var p=db.patients.find(function(x){return x.id===r.pid&&x.uid===r.uid}),ap=p&&p.appts.find(function(x){return x.id===r.apid});if(!ap)return;
+  if(r.kind==="resched"){ap.status="resched";ap.rdate=String(r.rdate||"");ap.rtime=String(r.rtime||"")}
+  else if(r.kind==="confirmed"||r.kind==="no"){ap.status=r.kind;ap.rdate="";ap.rtime=""}else return;
+  ap.pnote=String(r.pnote||"");
+  if(real&&r.kind==="confirmed")db.reqs.forEach(function(q){if(q.apid===ap.id){q.status="accepted";q.cdate=ap.date;q.ctime=ap.time}});
+}
+function overlayAll(){if(FB.mode==="pat")db.areq.slice().sort(byTs).forEach(function(r){ovr(r)})}
+function applyAreq(){if(FB.mode!=="doc"||!FB.loaded.pc||!FB.loaded.ar||!db.areq.length)return;db.areq.slice().sort(byTs).forEach(function(r){ovr(r,1)});db.areq=[];save()}
+function patAppt(a,el,p){
+  var ap=p.appts.find(function(x){return x.id===el.dataset.id});if(!ap)return;
+  var ni=document.getElementById("n_"+ap.id),pn=ni?ni.value.trim():"",k,rd="",rt="";
+  if(a==="setst"){k=el.dataset.v;if(k!=="confirmed"&&k!=="no")return}
+  else{k="resched";rd=v("r_d_"+ap.id);rt=v("r_t_"+ap.id);if(!rd)return alert("اختار التاريخ")}
+  var r={id:uid(),pid:p.id,uid:FB.user.uid,apid:ap.id,kind:k,rdate:rd,rtime:rt,pnote:pn,ts:Date.now()};
+  db.areq.push(r);ovr(r);S.rsAp=null;save();
+}
+function adoptReqs(){
+  if(!FB.loaded.pc||!FB.loaded.rq)return;var ch=false;
+  db.reqs.forEach(function(r){if(r.status!=="new"||r.apid)return;var ex=db.patients.find(function(x){return samePh(x.phone,r.phone)});if(!ex)return;var ap={id:uid(),date:r.date,time:r.time,note:r.reason,status:"req",pnote:"",reqid:r.id};ex.appts.push(ap);r.apid=ap.id;ch=true});
+  if(ch)save();
+}
+function listenMeta(){FB.unsub.push(fs.doc("meta/main").onSnapshot(function(d){if(d.exists){var x=d.data();db.clinic=x.clinic||db.clinic;db.th=x.th||"teal";db.dk=!!x.dk;FB.sent.m=JSON.stringify({clinic:db.clinic,th:db.th,dk:db.dk})}rr()},errH))}
+function listenNews(){FB.unsub.push(fs.collection("news").onSnapshot(function(sn){applyCol(sn,"n_","news");rr()},errH))}
+function lst(q,fn){FB.unsub.push(q.onSnapshot(fn,errH))}
+function startDoctor(){
+  lst(fs.collection("pc"),function(sn){applyPC(sn);FB.loaded.pc=1;adoptReqs();applyAreq();rr()});
+  lst(fs.collection("msgs"),function(sn){applyMsgs(sn);assemble();rr()});
+  lst(fs.collection("reqs"),function(sn){applyCol(sn,"r_","reqs");FB.loaded.rq=1;adoptReqs();rr()});
+  lst(fs.collection("areq"),function(sn){applyCol(sn,"a_","areq");FB.loaded.ar=1;applyAreq();rr()});
+  listenMeta();listenNews();
+}
+function startPatient(u){
+  lst(fs.collection("pc").where("uid","==",u.uid),function(sn){
+    if(!sn.size){if(!sn.metadata.fromCache&&!FB.gotP){alert("ما لقينا ملفك، تواصل مع العيادة");auth.signOut()}return}
+    FB.gotP=true;applyPC(sn);var p=db.patients[0];if(p){S.role="pat";S.pid=p.id}rr();
+  });
+  lst(fs.collection("msgs").where("uid","==",u.uid),function(sn){applyMsgs(sn);assemble();rr()});
+  lst(fs.collection("areq").where("uid","==",u.uid),function(sn){applyCol(sn,"a_","areq");overlayAll();rr()});
+  listenMeta();listenNews();
+}
+function startVisitor(u){
+  lst(fs.collection("reqs").where("uid","==",u.uid),function(sn){applyCol(sn,"r_","reqs");rr()});
+  listenMeta();
+}
+function mkAcct(pt){
+  var sec=firebase.apps.filter(function(x){return x.name==="sec"})[0]||firebase.initializeApp(CFG,"sec"),sa=sec.auth(),em=pEmail(pt.phone),pw="ym#"+pt.code;
+  return sa.createUserWithEmailAndPassword(em,pw).catch(function(e){if(e.code==="auth/email-already-in-use")return sa.signInWithEmailAndPassword(em,pw);throw e})
+   .then(function(c){pt.uid=c.user.uid;return sa.signOut()}).then(function(){if(db.patients.indexOf(pt)<0)db.patients.push(pt);save();render()})
+   .catch(function(e){alert("تعذّر إنشاء حساب دخول للمريض ("+(e.code||e.message)+"). إذا كان الرقم مسجّل قبل برمز مختلف، استخدم نفس الرمز القديم.")});
+}
+if(auth)auth.onAuthStateChanged(function(u){
+  FB.unsub.forEach(function(f){f()});FB.unsub=[];FB.sent={};FB.loaded={};FB.gotP=false;FB.user=u;
+  FB.msgs=[];db.patients=[];db.news=[];db.reqs=[];db.areq=[];S.pid=null;S.settings=false;
+  if(!u){S.role=null;render();auth.signInAnonymously().catch(errH);return}
+  if(u.isAnonymous){FB.mode="vis";S.role=null;startVisitor(u)}
+  else if(/@ym-dental\.app$/.test(u.email||"")){FB.mode="pat";S.role=null;startPatient(u)}
+  else{FB.mode="doc";S.role="doc";S.tab="info";startDoctor()}
+  render();
+});
+
+render();
+</script>
+</body>
+</html>
